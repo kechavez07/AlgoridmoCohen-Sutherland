@@ -17,8 +17,7 @@ namespace AlgoridmoCohen_Sutherland
         public Form1()
         {
             InitializeComponent();
-            pictureBox1.Paint += pictureBox1_Paint;
-            pictureBox1.MouseDown += pictureBox1_MouseDown;
+
         }
         // Códigos de región (outcode)
         const int INSIDE = 0; // 0000
@@ -115,8 +114,20 @@ namespace AlgoridmoCohen_Sutherland
             }
             return accept;
         }
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("Click en: " + e.Location.ToString());
+            if (puntos.Count == 2)
+                puntos.Clear();
+
+            puntos.Add(e.Location);
+            pictureBox1.Invalidate();
+        }
+
+        private void pictureBox1_Paint_1(object sender, PaintEventArgs e)
+        {
+            e.Graphics.Clear(Color.White);
             // Dibujar área de recorte (ventana)
             e.Graphics.DrawRectangle(Pens.Blue, rectRecorte);
 
@@ -131,14 +142,6 @@ namespace AlgoridmoCohen_Sutherland
                     e.Graphics.DrawLine(new Pen(Color.Red, 2), r1, r2); // Línea recortada en rojo
                 }
             }
-        }
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (puntos.Count == 2)
-                puntos.Clear();
-
-            puntos.Add(e.Location);
-            pictureBox1.Invalidate();
         }
     }
 }
